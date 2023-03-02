@@ -216,8 +216,8 @@
                                     <div class="tab-content" id="pills-tabContent">
                                         <div class="tab-pane fade show active" id="pills-grid" role="tabpanel"
                                             aria-labelledby="pills-grid-tab">
-                                            <ul style="color:red; font-size: 150%" class="p-5">
-                                                <li><strong>Подключить новое поле old_price в проекте</strong></li>
+                                            <ul style="color:grey; font-size: 100%" class="p-5">
+                                                <li><strong><del>Подключить новое поле old_price в проекте</del></strong></li>
                                             </ul>
                                             <div class="row">
                                                 <div v-for="product in products" :key="product.id" class="col-xl-4 col-lg-6 col-6 ">
@@ -319,17 +319,19 @@
                                                                                 <h2> ${{ product.price }} USD <del> ${{ product.old_price }} USD</del></h2>
                                                                                 <h6> In stuck</h6>
                                                                             </div>
-                                                                            <div class="color-varient"> <a href="#0"
-                                                                                    class="color-name pink">
-                                                                                    <span>Pink</span> </a> <a href="#0"
-                                                                                    class="color-name red">
-                                                                                    <span>Red</span> </a>
-                                                                                <a href="#0"
-                                                                                    class="color-name yellow"><span>Yellow</span>
-                                                                                </a> <a href="#0" class="color-name blue">
-                                                                                    <span>Blue</span>
-                                                                                </a> <a href="#0" class="color-name black">
-                                                                                    <span>Black</span> </a> </div>
+                                                                            <div class="color-varient">
+                                                                                <template v-for="groupProduct in product.group_products" :key="groupProduct.id"> 
+                                                                                    <a 
+                                                                                        v-for="color in groupProduct.colors" 
+                                                                                        :key="color.id" 
+                                                                                        :style="`background: #${color.title};`"
+                                                                                        href="#0" 
+                                                                                        class="color-name pink"
+                                                                                    > 
+                                                                                        <span>Pink</span> 
+                                                                                    </a> 
+                                                                                </template>
+                                                                            </div>
                                                                             <div class="add-product">
                                                                                 <h6>Qty:</h6>
                                                                                 <div class="button-group">
@@ -2139,6 +2141,7 @@ export default {
         getProducts() {
             this.axios.get('http://shop/api/products')
             .then(res => {
+                console.log(res.data.data)
                 this.products = res.data.data;
             })
             .finally(v => {

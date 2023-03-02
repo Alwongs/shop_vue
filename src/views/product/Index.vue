@@ -242,14 +242,14 @@
                                                                                 class="flaticon-left-and-right-arrows"></i>
                                                                             <span>
                                                                                 compare</span> </a> </li>
-                                                                    <li><a href="#popup5" class="popup_link"> <i
+                                                                    <li><a :href="`#popup${product.id}`" class="popup_link"> <i
                                                                                 class="flaticon-visibility"></i>
                                                                             <span> quick view</span>
                                                                         </a> </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div id="popup5" class="product-gird__quick-view-popup mfp-hide">
+                                                        <div :id="`popup${product.id}`" class="product-gird__quick-view-popup mfp-hide">
                                                             <div class="container">
                                                                 <div class="row justify-content-between align-items-center">
                                                                     <div class="col-lg-6">
@@ -260,7 +260,7 @@
                                                                                         <li
                                                                                             class="tab-nav popup-product-thumb">
                                                                                             <a href="#tabb1">
-                                                                                                <img src="src/assets/images/shop/products-v6-img5.jpg"
+                                                                                                <img :src="product.image_url"
                                                                                                     alt="" /> </a> </li>
                                                                                         <li
                                                                                             class="tab-nav popup-product-thumb ">
@@ -279,7 +279,7 @@
                                                                                         class="tab-item popup-product-image">
                                                                                         <div
                                                                                             class="popup-product-single-image">
-                                                                                            <img src="src/assets/images/shop/products-v6-img5.jpg"
+                                                                                            <img :src="product.image_url"
                                                                                                 alt="" /> </div>
                                                                                     </div>
                                                                                     <div id="tabb2"
@@ -306,7 +306,7 @@
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <div class="popup-right-content">
-                                                                            <h3>Brown Office Shoe</h3>
+                                                                            <h3>{{ product.title }}</h3>
                                                                             <div class="ratting"> <i
                                                                                     class="flaticon-star"></i> <i
                                                                                     class="flaticon-star"></i> <i
@@ -314,11 +314,9 @@
                                                                                 <i class="flaticon-star"></i> <i
                                                                                     class="flaticon-star"></i>
                                                                                 <span>(112)</span> </div>
-                                                                            <p class="text"> Hydrating Plumping Intense
-                                                                                Shine Lip Colour
-                                                                            </p>
+                                                                            <p class="text">{{ product.description }}</p>
                                                                             <div class="price">
-                                                                                <h2> $42 USD <del> $65 USD</del></h2>
+                                                                                <h2> ${{ product.price }} USD <del> ${{ product.old_price }} USD</del></h2>
                                                                                 <h6> In stuck</h6>
                                                                             </div>
                                                                             <div class="color-varient"> <a href="#0"
@@ -367,7 +365,7 @@
                                                             <h5><a href="shop-details-3.html">{{ product.title }}</a>
                                                             </h5>
                                                             <p>
-                                                                <del>$200.00</del> 
+                                                                <del>$ {{ product.old_price }}</del> 
                                                                 $ {{ product.price }}
                                                             </p>
                                                         </div>
@@ -2142,6 +2140,9 @@ export default {
             this.axios.get('http://shop/api/products')
             .then(res => {
                 this.products = res.data.data;
+            })
+            .finally(v => {
+                $(document).trigger('change')
             })
         }
     }

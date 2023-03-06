@@ -230,10 +230,12 @@
                                             <div class="row">
                                                 <div v-for="product in products" :key="product.id" class="col-xl-4 col-lg-6 col-6 ">
                                                     <div class="products-three-single w-100  mt-30">
-                                                        <div class="products-three-single-img"> <a
-                                                                href="shop-details-3.html" class="d-block"> <img
+                                                        <div class="products-three-single-img"> 
+                                                            <a href="shop-details-3.html" class="d-block">
+                                                                <img
                                                                     :src="product.image_url"
-                                                                    class="first-img" alt="" /> <img
+                                                                    class="first-img" alt="" />
+                                                                <img
                                                                     src="src/assets/images/home-three/productss2-hover-1.png"
                                                                     alt="" class="hover-img" />
                                                             </a>
@@ -365,7 +367,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="products-three-single-content text-center"> <span>{{ product.category.title }}</span>
-                                                            <h5><a href="shop-details-3.html">{{ product.title }}</a>
+                                                            <h5>
+                                                                <router-link :to="{ name: 'products.show', params: {id: product.id} }">{{ product.title }}</router-link>
                                                             </h5>
                                                             <p>
                                                                 <del>$ {{ product.old_price }}</del> 
@@ -488,7 +491,6 @@ export default {
             .then(res => {
                 this.products = res.data.data;
                 this.pagination = res.data.meta;
-                console.log(res)
             })
             .finally(v => {
                 $(document).trigger('changed')

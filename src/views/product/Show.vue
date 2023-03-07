@@ -24,12 +24,20 @@
                         <div class="col-xl-6 col-lg-6 mt-30 wow fadeInUp animated">
                             <div class="single-product-box one">
                                 <div class="big-product single-product-one slider-for">
-                                    <div>
-                                        <div class="single-item"> <img src="http://localhost:5173/src/assets/images/shop/products-img1.jpg" alt="">
-                                            <div class="ptag"> <span class="one">-20% </span> </div> <a href="#0"
-                                                class="love"> <i class="flaticon-like"></i> </a>
+                                        <div>
+                                            <div class="single-item">
+                                                <img 
+                                                    :src="product.image_url" 
+                                                    alt=""
+                                                >
+                                                <div class="ptag">
+                                                    <span class="one">-20%</span>
+                                                </div>
+                                                <a href="#0" class="love"> <i class="flaticon-like"></i> </a>
+                                            </div>
                                         </div>
-                                    </div>
+
+<!-- 
                                     <div>
                                         <div class="single-item"> <img src="http://localhost:5173/src/assets/images/shop/products-img2.jpg" alt="">
                                             <div class="ptag"> <span class="one">-20% </span> </div> <a href="#0"
@@ -53,14 +61,27 @@
                                             <div class="ptag"> <span class="one">-20% </span> </div> <a href="#0"
                                                 class="love"> <i class="flaticon-like"></i> </a>
                                         </div>
-                                    </div>
+                                    </div> -->
+
                                 </div>
                                 <div class="navholder">
                                     <div class="product-slicknav single-product-one-nav slider-nav">
-                                        <div> <span class="single-item"> <img
-                                                    src="http://localhost:5173/src/assets/images/shop/shop-details-top-img-1.png" alt=""> </span>
+                                        <div> 
+                                            <span class="single-item"> 
+                                            <img
+                                                :src="product.image_url" 
+                                                alt="">
+                                            </span>
                                         </div>
-                                        <div> <span class="single-item"> <img
+                                        <!-- <div> 
+                                            <span class="single-item"> 
+                                            <img
+                                                :src="product.image_url" 
+                                                alt="">
+                                            </span>
+                                        </div> -->
+
+                                        <!-- <div> <span class="single-item"> <img
                                                     src="http://localhost:5173/src/assets/images/shop/shop-details-top-img-2.png" alt=""> </span>
                                         </div>
                                         <div> <span class="single-item"> <img
@@ -71,7 +92,7 @@
                                         </div>
                                         <div> <span class="single-item"> <img
                                                     src="http://localhost:5173/src/assets/images/shop/shop-details-top-img-2.png" alt=""> </span>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -91,15 +112,16 @@
                                             <p>(2 Reviews)</p>
                                         </div>
                                     </div>
+
                                     <div class="shop-details-top-title">
-                                        <h3>Gold Diamond Bracelet</h3>
+                                        <h3>{{ product.title }}</h3>
                                     </div>
                                     <ul class="shop-details-top-info">
                                         <li><span>SKU:</span> 25d5214</li>
                                         <li><span>Vendor:</span> Flemeno</li>
                                     </ul>
                                     <div class="shop-details-top-price-box">
-                                        <h3>$30.00 <del>$50.00</del></h3>
+                                        <h3>${{ product.price }} <del>${{ product.old_price }}</del></h3>
                                         <p>(+15% Vat Included)</p>
                                     </div>
                                     <p class="shop-details-top-product-sale"><span>20</span> Products sold in last 12 hours
@@ -1316,15 +1338,15 @@ export default {
     },
     data() {
         return {
-            product: null
+            product: {}
         }
     },
     methods: {
         getProduct() {
             this.axios.get(`http://shop/api/products/${this.$route.params.id}`)
             .then(res => {
-                this.popupProduct = res.data.data;  
-                console.log(res);              
+                this.product = res.data.data;  
+                console.log(res.data.data);              
             })
             .finally(v => {
                 $(document).trigger('changed')
